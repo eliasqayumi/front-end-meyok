@@ -1,0 +1,239 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;">College Employees</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+        aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <!-- add CollegeEmployee button -->
+                <a class="nav-link" (click)="onOpenModal(null, 'add')">Add College Employee <span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input type="search" (ngModelChange)="search(key.value)" #key="ngModel" ngModel name="key" id="searchName"
+                class="form-control mr-sm-2" placeholder="Search employees..." required>
+        </form>
+    </div>
+</nav>
+
+<!--  Show data-->
+<div class="container" id="main-container">
+    <div class="row">
+        <div *ngFor="let collegeEmployee of collegeEmployees" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+                <!-- <div class="card-body row">
+                    <div class="col-6 card-title align-self-center mb-0">
+                        <h5> {{collegeEmployee?.id}}</h5>
+                    </div>
+                </div> -->
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>College Employee Id
+                            :</strong>
+                        {{collegeEmployee?.id | titlecase}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>College Name
+                            :</strong>
+                        {{collegeEmployee?.college.collegeName | titlecase}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>Employee Name
+                            :</strong>
+                        {{collegeEmployee?.tcNo.name |titlecase}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>Entrance Date
+                            :</strong>
+                        {{collegeEmployee?.entranceDate |titlecase}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>Title :</strong>
+                        {{collegeEmployee?.title}}</li>
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i><strong>Task :</strong>
+                        {{collegeEmployee?.task}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <!-- edit CollegeEmployee button-->
+                        <a (click)="onOpenModal(collegeEmployee, 'edit')" class="btn btn-primary tooltips"
+                            data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <!-- delete CollegeEmployee button -->
+                        <a (click)="onOpenModal(collegeEmployee, 'delete')" class="btn btn-secondary tooltips"
+                            data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add CollegeEmployee Modal -->
+    <div class="modal fade" id="addCollegeEmployeeModal" tabindex="-1" role="dialog"
+        aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" (ngSubmit)="onAddCollegeEmployee(addForm)">
+                        <div class="form-group">
+                            <label for="Id">Id</label>
+                            <input type="text" ngModel name="id" class="form-control" id="id"
+                                placeholder="CollegeEmployee Id" required>
+                        </div>
+
+
+                        <!-- Employee -->
+                        <div class="form-group">
+                            <label for="tcNo">Employee</label>
+                            <select [ngModel]="selectedEmployee" name="tcNo" id="tcNo" class="form-control">
+                                <option *ngFor="let employee of employees" [ngValue]="employee">
+                                    {{employee.name}}</option>
+                            </select>
+                        </div>
+
+                        <!-- college -->
+                        <div class="form-group">
+                            <label for="college">College</label>
+                            <select [ngModel]="selectedCollege" name="college" id="college" class="form-control">
+                                <option *ngFor="let college of colleges" [ngValue]="college">{{college.collegeName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Entrance Date -->
+                        <div class="form-group">
+                            <label for="entranceDate">Entrancde Date</label>
+                            <input type="date" ngModel name="entranceDate" class="form-control" id="entranceDate"
+                                required>
+                        </div>
+                        <!-- Title -->
+                        <div class="form-group">
+                            <label for="title">Task</label>
+                            <input type="text" ngModel name="title" class="form-control" id="title" placeholder="Title"
+                                required>
+                        </div>
+
+                        <!-- task -->
+                        <div class="form-group">
+                            <label for="task">Task</label>
+                            <input type="text" ngModel name="task" class="form-control" id="task" placeholder="Task"
+                                required>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" id="add-CollegeEmployee-form" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
+                            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save
+                                changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="updateCollegeEmployeeModal" tabindex="-1" role="dialog"
+        aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateEmployeeModalLabel">Edit CollegeEmployee
+                        {{editCollegeEmployee?.college.collegeName}} {{editCollegeEmployee?.tcNo.name}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm">
+                        <h5>Id: {{editCollegeEmployee?.id}}</h5>
+                        <input type="hidden" ngModel="{{editCollegeEmployee?.id}}" name="id" class="form-control"
+                            id="id">
+
+                        <!-- Employee -->
+                        <div class="form-group">
+                            <label for="tcNo">Employee</label>
+                            <select [ngModel]="selectedEmployee" name="tcNo" id="tcNo" class="form-control">
+                                <option *ngFor="let employee of employees" [ngValue]="employee"
+                                    [selected]="employee.EmployeeName == editCollegeEmployee?.tcNo.EmployeeName">
+                                    {{employee.EmployeeName}}</option>
+                            </select>
+                        </div>
+
+                        <!-- College -->
+                        <div class="form-group">
+                            <label for="college">College Name</label>
+                            <select [ngModel]="selectedCollege" name="college" id="college" class="form-control">
+                                <option *ngFor="let college of colleges" [ngValue]="college"
+                                    [selected]="college.collegeName == editCollegeEmployee?.college.collegeName">
+                                    {{college.collegeName}}</option>
+                            </select>
+                        </div>
+
+                        <!-- Entrance Date -->
+                        <div class="form-group">
+                            <label for="entranceDate">Entrance Date</label>
+                            <input type="date" ngModel="{{editCollegeEmployee?.entranceDate}}" name="entranceDate"
+                                class="form-control" id="entranceDate" aria-describedby="emailHelp">
+                        </div>
+                        <!-- Title -->
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" ngModel="{{editCollegeEmployee?.title}}" name="title"
+                                class="form-control" id="title" aria-describedby="emailHelp" placeholder="Title">
+                        </div>
+
+                        <!-- Task -->
+                        <div class="form-group">
+                            <label for="task">Task</label>
+                            <input type="text" ngModel="{{editCollegeEmployee?.task}}" name="task" class="form-control"
+                                id="task" aria-describedby="emailHelp" placeholder="Task">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                            <button (click)="onUpdateCollegeEmployee(editForm.value)" data-dismiss="modal"
+                                class="btn btn-primary">Save
+                                changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteCollegeEmployeeModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteModelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Delete Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete employee {{deleteCollegeEmployee?.tcNo.name}}?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button (click)="onDeleteCollegeEmployee(deleteCollegeEmployee?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification for no employees -->
+<div *ngIf="collegeEmployees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">NO CollegeEmployee!</h4>
+        <p>No CollegeEmployee were found.</p>
+    </div>
+</div>
