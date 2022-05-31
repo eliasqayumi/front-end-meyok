@@ -1,27 +1,90 @@
-# Meyok
+# Final - Meyok - 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
+* 1. Veri tabanı (MySQL)
+* 2. Back-end (Springboot)
+* 3. Front-end (Angular)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+***Back-end***
 
-## Code scaffolding
+* Backend çalıştırmak için herhangi java derleyicini açabilirsiniz (IntelliJ IDEA),(Eclips),(NetBeans) vb.
+* Dizin yolu
+-- MEYOK FULL PROJECT
+                    |
+                    Backend
+                        |
+                        MEYOK    ***Bu klasörü direk yukarıdaki herhangi bir derleyiciye açınız***
+**Backend Ayarlar**
+* veritabanlar ilişki kurulması için ayarlar yapılması gerekiyor, aşağıdaki yolu izelere ayarlar yapılır
+--MEYOK
+    |
+    src
+        |
+        main
+            |
+            resources
+                    |
+                    application.properties
+                                        |
+                                        ***Bu dosyayı açınız***
+                         __________________________________________________________________________________________   
+                        |                                                                                          |
+                        |                                                                                          |
+                        |    spring.datasource.url=jdbc:mysql://localhost:3306/MEYOK                               |
+                        |    spring.datasource.username=***databaseuserName***                                     |
+                        |    spring.datasource.password=***password***                                             |
+                        |    spring.jpa.show-sql=true                                                              |
+                        |    spring.jpa.hibernate.ddl-auto=update                                                  |
+                        |    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect           |
+                        |    ***Eğer Geçici veri taban kullanmak isityorsak bu kısmı komutsatırdan çıkarınız***    |
+                        |    ***ve yukarıdakı kodu komut satıra dönüştürünüz ya siliniz***                         |
+                        |    ***Komut satır, her satır başına # ekleyerek dönüştürebilirsibiz***                   |
+                        |    #spring.mvc.view.prefix=/WEB-INF/JSP/                                                 |
+                        |    #spring.mvc.view.suffix=.jsp                                                          |
+                        |    #spring.h2.console.enabled=true                                                       |
+                        |    #spring.datasource.platform=h2                                                        |
+                        |    #spring.datasource.url=jdbc:h2:mem:navin                                              |
+                        |                                                                                          |
+                        |__________________________________________________________________________________________|
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+*** Sorna uygulamayı çalıştırınız***
+--MEYOK
+    |
+    src
+        |
+        main
+            |
+            java
+                |
+                com
+                    |
+                    example
+                            |
+                            meyok
+                                |
+                                MeyokApplication.java ***Bu dosyayı açıp main metodu çalıştırınız***
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+***Front-end***
+* Frontend çalıştırmak için herhangi bir derleyicini açabilirsiniz (IntelliJ IDEA),(VisualStudio Code),(Atom) vb.
+* Dizin yolu
+-- MEYOK FULL PROJECT
+                    |
+                    Frontend
+                        |
+                        meyok   ***Bu klasörü direk yukarıdaki herhangi bir derleyiciye açınız***
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+***Front-end çalıştırmak için aşağıdaki uygulamalar yüklü olması lazım***
+* Node.js
+* angular cli
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ ***Frontend çalıştırmak için***
+ * Herhangi bir derleyicinin terminelini ya da işletim sisteminin terminelini açarak
+ * bu projenin dizinine gelin
+ * Frontend/meyok   ***dizini***
+    
+    ***bu dizine olduğunuzdan emin olmak için pwd komutunu çalıştırın***
+    * sonra ng serve komutu ile uygulamayı çalıştırınız
+    * şimdi herhangi bir web tarayıcı kullanrak localhost:4200 url kısmında yazıp çalıştırınız
+    
